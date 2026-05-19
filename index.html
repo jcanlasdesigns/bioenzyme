@@ -613,7 +613,7 @@
       font-size: 0.8rem;
     }
 
-    /* ===== MOBILE RESPONSIVE with CIRCLE TOGGLE BUTTON AT BOTTOM ===== */
+    /* ===== MOBILE RESPONSIVE with CIRCLE TOGGLE BUTTON (visible only on hero section) ===== */
     @media (max-width: 1000px) {
       .container { padding: 0 28px; }
       .hero-content h1 { font-size: 2.8rem; }
@@ -624,7 +624,7 @@
       
       .hero-visual {
         position: absolute;
-        top: 0;
+        top: 60px;
         left: 0;
         width: 100%;
         height: 100%;
@@ -637,7 +637,7 @@
       
       .image-stack {
         position: absolute;
-        top: 55%;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%) scale(0.85);
         width: 100%;
@@ -647,12 +647,11 @@
       }
       
       .stack-img { box-shadow: none !important; border-radius: 32px !important; border: none !important; }
-      .stack-img-back { width: 700px; left: -20%; top: -400px; transform: scale(1); opacity: 0.6; z-index: 1; }
+      .stack-img-back { width: 700px; left: -26%; top: -400px; transform: scale(1); opacity: 0.6; z-index: 1; }
       .stack-img-left { width: 45%; left: -2%; bottom: 5%; z-index: 3; opacity: 0.9; }
       .stack-img-center { width: 50%; left: 26%; bottom: 0%; z-index: 4; opacity: 0.95; }
       .stack-img-right { width: 45%; right: -2%; bottom: 15%; z-index: 2; opacity: 0.9; }
       
-      /* Hero content - initially hidden on mobile */
       .hero-content {
         text-align: center;
         z-index: 10;
@@ -669,14 +668,13 @@
         pointer-events: none;
       }
       
-      /* When visible */
       .hero-content.visible {
         opacity: 1;
         transform: translateY(0);
         pointer-events: auto;
       }
       
-      /* Circle toggle button at bottom center */
+      /* Circle toggle button - hidden by default, shown only on hero */
       .circle-toggle-btn {
         position: fixed;
         bottom: 24px;
@@ -692,10 +690,19 @@
         cursor: pointer;
         z-index: 100;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
         border: 2px solid rgba(255, 255, 245, 0.5);
         color: white;
         font-size: 1.4rem;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      
+      .circle-toggle-btn.visible {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
       }
       
       .circle-toggle-btn:hover {
@@ -934,24 +941,42 @@
   </div>
 </footer>
 
-<!-- Circle Toggle Button (Mobile only) -->
+<!-- Circle Toggle Button (Mobile only, visible only on hero section) -->
 <div class="circle-toggle-btn" id="circleToggleBtn">
   <i class="fas fa-chevron-up"></i>
 </div>
 
 <script>
-  // ===== CIRCLE TOGGLE BUTTON FOR HERO CONTENT (MOBILE ONLY) =====
+  // ===== CIRCLE TOGGLE BUTTON (appears only when hero section is in view) =====
   const toggleBtn = document.getElementById('circleToggleBtn');
   const heroContent = document.getElementById('heroContent');
-  let isContentVisible = false; // Initially hidden on mobile
-
-  // Only run on mobile view (width <= 1000px)
+  const heroSection = document.getElementById('home');
+  let isContentVisible = false;
+  
+  // Function to handle button visibility based on scroll position
+  function updateButtonVisibility() {
+    if (window.innerWidth <= 1000) {
+      const heroRect = heroSection.getBoundingClientRect();
+      const isHeroInView = heroRect.top <= window.innerHeight / 2 && heroRect.bottom >= window.innerHeight / 4;
+      
+      if (isHeroInView && toggleBtn) {
+        toggleBtn.classList.add('visible');
+      } else if (toggleBtn) {
+        toggleBtn.classList.remove('visible');
+      }
+    } else if (toggleBtn) {
+      toggleBtn.classList.remove('visible');
+    }
+  }
+  
+  // Initialize mobile toggle functionality
   function initMobileToggle() {
     if (window.innerWidth <= 1000) {
       // Initially hero content is hidden
       heroContent.classList.remove('visible');
       if (toggleBtn) toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
       isContentVisible = false;
+      updateButtonVisibility();
       
       // Add click event to toggle button
       if (toggleBtn) {
@@ -973,7 +998,7 @@
     } else {
       // On desktop, ensure hero content is always visible and button hidden
       if (heroContent) heroContent.classList.add('visible');
-      if (toggleBtn) toggleBtn.style.display = 'none';
+      if (toggleBtn) toggleBtn.classList.remove('visible');
     }
   }
 
@@ -1067,28 +1092,10 @@
   initAnimations();
   initMobileToggle();
   
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      initAnimations();
-      initMobileToggle();
-      // Reset visibility state
-      if (window.innerWidth <= 1000 && heroContent && !heroContent.classList.contains('visible')) {
-        // Keep hidden by default
-        heroContent.classList.remove('visible');
-        if (toggleBtn) toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
-        isContentVisible = false;
-      } else if (window.innerWidth > 1000 && heroContent) {
-        heroContent.classList.add('visible');
-        if (toggleBtn) toggleBtn.style.display = 'none';
-      } else if (window.innerWidth <= 1000 && toggleBtn) {
-        toggleBtn.style.display = 'flex';
-      }
-    }, 250);
-  });
-
+  // Add scroll listener to update button visibility
   window.addEventListener('scroll', () => {
+    updateButtonVisibility();
+    
     const header = document.querySelector('header');
     if (window.scrollY > 30) {
       header.style.background = 'rgba(255, 252, 242, 0.95)';
@@ -1096,6 +1103,16 @@
     } else {
       header.style.background = 'rgba(255, 252, 242, 0.85)';
     }
+  });
+  
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      initAnimations();
+      initMobileToggle();
+      updateButtonVisibility();
+    }, 250);
   });
 
   document.querySelectorAll('.nav-links a').forEach(anchor => {
