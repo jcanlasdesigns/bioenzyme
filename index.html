@@ -74,41 +74,21 @@
       padding: 10px 32px;
     }
 
-    .logo-area {
+    .logo-png {
       display: flex;
       align-items: center;
-      gap: 12px;
     }
-
-    .logo-image {
-      width: 44px;
+    
+    .logo-png img {
       height: 44px;
-      background: linear-gradient(135deg, #3E8E4A, #79C46B);
-      border-radius: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 6px 14px rgba(60, 110, 60, 0.25);
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+      transition: transform 0.2s ease;
     }
-
-    .logo-image img {
-      width: 28px;
-      height: 28px;
-      filter: brightness(0) invert(1);
-    }
-
-    .logo-text h2 {
-      font-size: 1.5rem;
-      background: linear-gradient(135deg, #2D6A3B, #6FB358);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .logo-text p {
-      font-size: 0.7rem;
-      letter-spacing: 1px;
-      color: #6D8662;
+    
+    .logo-png img:hover {
+      transform: scale(1.02);
     }
 
     .nav-links {
@@ -356,15 +336,17 @@
       max-width: 620px;
       height: 500px;
       margin: 0 auto;
+      transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.2);
     }
 
     .stack-img {
       position: absolute;
-      transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+      transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.2);
       object-fit: cover;
       will-change: transform, opacity;
     }
 
+    /* Desktop styles */
     .stack-img-back {
       width: 120%;
       left: 7%;
@@ -613,7 +595,7 @@
       font-size: 0.8rem;
     }
 
-    /* ===== MOBILE RESPONSIVE with CIRCLE TOGGLE BUTTON (visible only on hero section) ===== */
+    /* ===== MOBILE RESPONSIVE - Lower position on entry, splash bigger ===== */
     @media (max-width: 1000px) {
       .container { padding: 0 28px; }
       .hero-content h1 { font-size: 2.8rem; }
@@ -622,35 +604,103 @@
       .nav-links { display: none; }
       .hamburger { display: flex; }
       
+      .hero-grid {
+        flex-direction: column;
+        gap: 20px;
+        padding-top: 20px;
+      }
+      
       .hero-visual {
-        position: absolute;
-        top: 60px;
-        left: 0;
+        position: relative;
         width: 100%;
-        height: 100%;
-        min-height: 100%;
+        min-height: 360px;
         margin: 0;
-        opacity: 1;
-        pointer-events: none;
-        z-index: 1;
+        order: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       
       .image-stack {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0.85);
+        position: relative;
         width: 100%;
-        height: auto;
-        max-width: 480px;
-        margin: 0;
+        height: 360px;
+        max-width: 420px;
+        margin: 0 auto;
+        transform: translateY(30px); /* Lower position on entry */
+        transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.2);
       }
       
-      .stack-img { box-shadow: none !important; border-radius: 32px !important; border: none !important; }
-      .stack-img-back { width: 700px; left: -26%; top: -400px; transform: scale(1); opacity: 0.6; z-index: 1; }
-      .stack-img-left { width: 45%; left: -2%; bottom: 5%; z-index: 3; opacity: 0.9; }
-      .stack-img-center { width: 50%; left: 26%; bottom: 0%; z-index: 4; opacity: 0.95; }
-      .stack-img-right { width: 45%; right: -2%; bottom: 15%; z-index: 2; opacity: 0.9; }
+      .stack-img { 
+        box-shadow: none !important; 
+        border-radius: 28px !important; 
+        border: none !important; 
+      }
+      
+      /* DEFAULT LARGE MODE - images bigger, splash bigger */zzzzzzzzzzz
+      .image-stack.large-mode .stack-img-back {
+        width: 110%;
+        left: -5%;
+        top: -5%;
+		bottom: -50%;
+        transform: scale(1.1);
+        opacity: 0.5;
+        z-index: 1;
+      }
+      .image-stack.large-mode .stack-img-left {
+        width: 52%;
+        left: -2%;
+        bottom: -50%;
+        z-index: 3;
+        opacity: 0.9;
+      }
+      .image-stack.large-mode .stack-img-center {
+        width: 56%;
+        left: 24%;
+        bottom: -50%;
+        z-index: 4;
+        opacity: 0.95;
+      }
+      .image-stack.large-mode .stack-img-right {
+        width: 52%;
+        right: -2%;
+        bottom: -62%;
+        z-index: 2;
+        opacity: 0.9;
+      }
+      
+      /* SMALL MODE - images become smaller */
+      .image-stack.small-mode {
+        transform: translateY(20px);
+      }
+      .image-stack.small-mode .stack-img-back {
+        width: 90%;
+        left: 5%;
+        top: 5%;
+        transform: scale(0.9);
+        opacity: 0.4;
+      }
+      .image-stack.small-mode .stack-img-left {
+        width: 42%;
+        left: 3%;
+        bottom: 5%;
+        transform: scale(0.95);
+        opacity: 0.85;
+      }
+      .image-stack.small-mode .stack-img-center {
+        width: 46%;
+        left: 28%;
+        bottom: 0%;
+        transform: scale(0.95);
+        opacity: 0.9;
+      }
+      .image-stack.small-mode .stack-img-right {
+        width: 42%;
+        right: 3%;
+        bottom: 12%;
+        transform: scale(0.95);
+        opacity: 0.85;
+      }
       
       .hero-content {
         text-align: center;
@@ -658,14 +708,15 @@
         position: relative;
         background: rgba(253, 251, 247, 0.92);
         backdrop-filter: blur(12px);
-        border-radius: 48px;
-        padding: 28px 24px;
-        margin: 20px 0;
+        border-radius: 40px;
+        padding: 24px 20px;
+        margin: 10px 0 20px;
         width: 100%;
-        transition: opacity 0.4s ease, transform 0.4s ease, padding 0.3s ease;
+        transition: opacity 0.4s ease, transform 0.4s ease;
         opacity: 0;
         transform: translateY(20px);
         pointer-events: none;
+        order: 2;
       }
       
       .hero-content.visible {
@@ -674,7 +725,7 @@
         pointer-events: auto;
       }
       
-      /* Circle toggle button - hidden by default, shown only on hero */
+      /* Circle toggle button */
       .circle-toggle-btn {
         position: fixed;
         bottom: 24px;
@@ -693,7 +744,7 @@
         transition: all 0.3s ease;
         border: 2px solid rgba(255, 255, 245, 0.5);
         color: white;
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
@@ -712,30 +763,35 @@
       
       .hero-buttons { justify-content: center; }
       .hero-stats { justify-content: center; flex-wrap: wrap; gap: 24px; }
-      .hero-grid { gap: 0; position: relative; min-height: 100vh; }
       .badge-fresh { background: rgba(229, 245, 221, 0.95); backdrop-filter: blur(1px); }
       .hero-content p { color: #2A3D25; font-weight: 500; font-size: 1rem; }
-      .stat h3 { font-size: 1.6rem; }
+      .stat h3 { font-size: 1.5rem; }
       
       .footer-grid { flex-direction: column; gap: 30px; }
       .footer-col { text-align: center; }
       .social-links { justify-content: center; }
     }
 
-    @media (max-width: 600px) {
-      .hero-content h1 { font-size: 2.2rem; }
+    @media (max-width: 768px) {
+      .hero-content h1 { font-size: 2.4rem; }
       .hero-content { padding: 20px 16px; }
-      .image-stack { transform: translate(-50%, -50%) scale(0.75); max-width: 880px; }
-      .stack-img-left { width: 48%; }
-      .stack-img-right { width: 38%; top: -500px; }
-      .stack-img-center { width: 52%; left: 25%; }
+      .hero-visual { min-height: 320px; }
+      .image-stack { height: 320px; max-width: 380px; transform: translateY(25px); }
       .circle-toggle-btn { width: 50px; height: 50px; bottom: 20px; font-size: 1.2rem; }
     }
+
+    @media (max-width: 600px) {
+      .hero-content h1 { font-size: 2rem; }
+      .hero-content { padding: 18px 14px; }
+      .hero-visual { min-height: 280px; }
+      .image-stack { height: 280px; max-width: 320px; transform: translateY(20px); }
+      .circle-toggle-btn { width: 46px; height: 46px; bottom: 16px; font-size: 1.1rem; }
+    }
     
-    @media (max-width: 1000px) and (orientation: landscape) {
-      .image-stack { transform: translate(-50%, -50%) scale(0.65); max-width: 850px; }
-      .hero-content { padding: 20px 24px; }
-      .circle-toggle-btn { bottom: 16px; width: 48px; height: 48px; }
+    @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+      .image-stack { transform: translateY(40px); }
+      .hero-visual { min-height: 400px; }
+      .image-stack { height: 400px; max-width: 500px; }
     }
   </style>
 </head>
@@ -745,14 +801,8 @@
 
 <header>
   <div class="nav-flex">
-    <div class="logo-area">
-      <div class="logo-image">
-        <img src="https://placehold.co/100x100/FFFFFF/2D6A3B?text=🌿" alt="Bio Enzyme Logo">
-      </div>
-      <div class="logo-text">
-        <h2>BIO·ENZYME</h2>
-        <p>100% organic • living culture</p>
-      </div>
+    <div class="logo-png">
+      <img src="bio-logo.png" alt="Bio Enzyme Logo">
     </div>
     <div class="nav-links">
       <a href="#home">Home</a>
@@ -900,11 +950,8 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col">
-        <div class="logo-area" style="margin-bottom: 16px; justify-content: flex-start;">
-          <div class="logo-image" style="background: #5A9E4E;">
-            <img src="https://placehold.co/100x100/FFFFFF/2D6A3B?text=🌿" alt="logo">
-          </div>
-          <div class="logo-text"><h2 style="color:#E0F0D0;">BIO·ENZYME</h2><p style="color:#B1D6A0;">100% organic food & drink</p></div>
+        <div class="logo-png" style="margin-bottom: 16px; justify-content: flex-start;">
+          <img src="bio-logo.png" alt="Bio Enzyme Logo" style="height: 40px;">
         </div>
         <p>Enzymes for life — pure, potent, planet-friendly.</p>
       </div>
@@ -941,27 +988,26 @@
   </div>
 </footer>
 
-<!-- Circle Toggle Button (Mobile only, visible only on hero section) -->
 <div class="circle-toggle-btn" id="circleToggleBtn">
   <i class="fas fa-chevron-up"></i>
 </div>
 
 <script>
-  // ===== CIRCLE TOGGLE BUTTON (appears only when hero section is in view) =====
   const toggleBtn = document.getElementById('circleToggleBtn');
   const heroContent = document.getElementById('heroContent');
   const heroSection = document.getElementById('home');
-  let isContentVisible = false;
+  const imageStack = document.getElementById('imageStack');
+  let isSmallMode = false;
+  let animationInProgress = false;
   
-  // Function to handle button visibility based on scroll position
   function updateButtonVisibility() {
     if (window.innerWidth <= 1000) {
       const heroRect = heroSection.getBoundingClientRect();
       const isHeroInView = heroRect.top <= window.innerHeight / 2 && heroRect.bottom >= window.innerHeight / 4;
       
-      if (isHeroInView && toggleBtn) {
+      if (isHeroInView && toggleBtn && !animationInProgress) {
         toggleBtn.classList.add('visible');
-      } else if (toggleBtn) {
+      } else if (toggleBtn && !animationInProgress) {
         toggleBtn.classList.remove('visible');
       }
     } else if (toggleBtn) {
@@ -969,35 +1015,60 @@
     }
   }
   
-  // Initialize mobile toggle functionality
+  function switchToSmallMode() {
+    if (animationInProgress) return;
+    animationInProgress = true;
+    
+    imageStack.classList.remove('large-mode');
+    imageStack.classList.add('small-mode');
+    toggleBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
+    heroContent.classList.add('visible');
+    isSmallMode = true;
+    
+    gsap.to(imageStack, { duration: 0.5, scale: 0.95, y: 20, ease: "power2.out", onComplete: () => { animationInProgress = false; updateButtonVisibility(); } });
+  }
+  
+  function switchToLargeMode() {
+    if (animationInProgress) return;
+    animationInProgress = true;
+    
+    imageStack.classList.remove('small-mode');
+    imageStack.classList.add('large-mode');
+    toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
+    heroContent.classList.remove('visible');
+    isSmallMode = false;
+    
+    gsap.to(imageStack, { duration: 0.5, scale: 1, y: 30, ease: "back.out(0.5)", onComplete: () => { animationInProgress = false; updateButtonVisibility(); } });
+  }
+  
   function initMobileToggle() {
     if (window.innerWidth <= 1000) {
-      // Initially hero content is hidden
+      // Start with LARGE mode (images bigger, text hidden, lower position)
+      imageStack.classList.add('large-mode');
+      imageStack.classList.remove('small-mode');
       heroContent.classList.remove('visible');
+      isSmallMode = false;
       if (toggleBtn) toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
-      isContentVisible = false;
       updateButtonVisibility();
       
-      // Add click event to toggle button
       if (toggleBtn) {
         toggleBtn.onclick = function(e) {
           e.stopPropagation();
-          if (isContentVisible) {
-            // Hide content
-            heroContent.classList.remove('visible');
-            toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
-            isContentVisible = false;
+          if (animationInProgress) return;
+          
+          if (isSmallMode) {
+            switchToLargeMode();
           } else {
-            // Show content
-            heroContent.classList.add('visible');
-            toggleBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
-            isContentVisible = true;
+            switchToSmallMode();
           }
         };
       }
     } else {
-      // On desktop, ensure hero content is always visible and button hidden
+      // Desktop: always show content, remove special classes
       if (heroContent) heroContent.classList.add('visible');
+      if (imageStack) {
+        imageStack.classList.remove('large-mode', 'small-mode');
+      }
       if (toggleBtn) toggleBtn.classList.remove('visible');
     }
   }
@@ -1071,28 +1142,24 @@
         .to('.stack-img-right', { scale: 1, opacity: 1, x: 0, rotation: 0, duration: 1.1 }, 0.65)
         .to('.image-stack', { y: -6, duration: 2.8, repeat: -1, yoyo: true, ease: "sine.inOut" }, "+=0.3");
     } else {
-      gsap.set('.stack-img-back', { scale: 0.8, opacity: 0, y: 30 });
-      gsap.set('.stack-img-left', { scale: 0.8, opacity: 0, x: -40, rotation: -5 });
-      gsap.set('.stack-img-center', { scale: 0.8, opacity: 0, y: 40, rotation: 3 });
-      gsap.set('.stack-img-right', { scale: 0.8, opacity: 0, x: 40, rotation: 5 });
+      // For mobile, fade in the images (starting lower)
+      gsap.set('.stack-img-back', { opacity: 0, y: 20 });
+      gsap.set('.stack-img-left', { opacity: 0, y: 20 });
+      gsap.set('.stack-img-center', { opacity: 0, y: 20 });
+      gsap.set('.stack-img-right', { opacity: 0, y: 20 });
       
-      const mobileTimeline = gsap.timeline({ defaults: { duration: 0.8, ease: "back.out(0.7)" } });
+      const mobileTimeline = gsap.timeline({ defaults: { duration: 0.7, ease: "back.out(0.7)" } });
       mobileTimeline
-        .to('.stack-img-back', { scale: 1, opacity: 0.6, y: 0, rotation: 0, duration: 0.8 }, 0)
-        .to('.stack-img-left', { scale: 1, opacity: 0.9, x: 0, rotation: 0, duration: 0.75 }, 0.25)
-        .to('.stack-img-center', { scale: 1, opacity: 0.95, y: 0, rotation: 0, duration: 0.75 }, 0.5)
-        .to('.stack-img-right', { scale: 1, opacity: 0.9, x: 0, rotation: 0, duration: 0.75 }, 0.75);
-      
-      setTimeout(() => {
-        gsap.to('.image-stack', { y: -4, duration: 3, repeat: -1, yoyo: true, ease: "sine.inOut" });
-      }, 1000);
+        .to('.stack-img-back', { opacity: 0.5, y: 0, duration: 0.6 }, 0)
+        .to('.stack-img-left', { opacity: 0.9, y: 0, duration: 0.6 }, 0.15)
+        .to('.stack-img-center', { opacity: 0.95, y: 0, duration: 0.6 }, 0.3)
+        .to('.stack-img-right', { opacity: 0.9, y: 0, duration: 0.6 }, 0.45);
     }
   }
   
   initAnimations();
   initMobileToggle();
   
-  // Add scroll listener to update button visibility
   window.addEventListener('scroll', () => {
     updateButtonVisibility();
     
