@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Bio Enzyme | Shop All — Organic Enzyme Elixirs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="nav-flex">
+    <div class="logo-png">
+      <a href="index.html"><img src="bio-logo.png" alt="Bio Enzyme Logo"></a>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#products">Products</a>
+      <a href="index.html#testimonials">Video stories</a>
+      <a href="shop.html" class="btn-shop">Shop now →</a>
+    </div>
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="close-menu" id="closeMenu">&times;</div>
+  <a href="index.html">Home</a>
+  <a href="index.html#about">About</a>
+  <a href="index.html#products">Products</a>
+  <a href="index.html#testimonials">Video stories</a>
+  <a href="shop.html" class="btn-shop-mobile">Shop now →</a>
+</div>
+
+<main>
+  <section class="shop-hero">
+    <div class="container">
+      <h1>All enzyme elixirs</h1>
+      <p>Wild-fermented, organic, and alive with probiotics — crafted in small batches.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" data-category="all">All</button>
+      <button class="filter-btn" data-category="elixir">Elixirs</button>
+      <button class="filter-btn" data-category="powder">Powders</button>
+      <button class="filter-btn" data-category="cider">Ciders</button>
+    </div>
+  </div>
+
+  <section class="shop-products">
+    <div class="container">
+      <div class="products-grid-shop" id="productsGrid"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="logo-png" style="margin-bottom: 16px;">
+          <img src="bio-logo.png" alt="Bio Enzyme Logo" style="height: 40px;">
+        </div>
+        <p>Enzymes for life — pure, potent, planet-friendly.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Discover</h4>
+        <p><a href="#">Our story</a></p>
+        <p><a href="#">Wholesale</a></p>
+        <p><a href="#">Lab reports</a></p>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <p><a href="#">FAQ</a></p>
+        <p><a href="#">Shipping</a></p>
+        <p><a href="#">Contact us</a></p>
+      </div>
+      <div class="footer-col">
+        <h4>Follow us</h4>
+        <div class="social-links">
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        </div>
+        <p style="margin-top: 20px;"><i class="fas fa-envelope"></i> hello@bioenzyme.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 BIO-ENZYME — pure organic drink & food enzyme.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING CART FAB -->
+<div class="cart-fab" id="cartFab">
+  <i class="fas fa-shopping-bag"></i>
+  <span class="cart-fab-badge" id="cartFabBadge">0</span>
+</div>
+
+<!-- CART MODAL -->
+<div id="cartModal" class="cart-modal">
+  <div class="cart-modal-content">
+    <div class="cart-header">
+      <h2><i class="fas fa-shopping-bag" style="margin-right: 10px;"></i> Your cart</h2>
+      <i class="fas fa-times close-cart" id="closeCartBtn"></i>
+    </div>
+    <div id="cartItemsContainer" class="cart-items-list">
+      <div class="empty-cart-msg">Your cart is empty.</div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display: none;">
+      <div class="cart-total-row">
+        <span>Total</span>
+        <span id="cartTotalPrice">P0</span>
+      </div>
+      <button class="checkout-btn" id="proceedToPaymentBtn">Proceed to payment →</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

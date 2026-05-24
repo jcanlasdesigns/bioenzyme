@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Bio Enzyme | Checkout — Complete Your Order</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Checkout page specific styles */
+    .checkout-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 140px 24px 80px;
+    }
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 48px;
+    }
+    .order-summary {
+      background: #F9F6EF;
+      border-radius: 32px;
+      padding: 28px;
+      border: 1px solid #E6E2D6;
+      position: sticky;
+      top: 120px;
+      height: fit-content;
+    }
+    .order-summary h3 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: #1E4226;
+    }
+    .checkout-items {
+      max-height: 400px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+    }
+    .checkout-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #E0D8CA;
+    }
+    .checkout-total {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 2px solid #D0C8B8;
+      display: flex;
+      justify-content: space-between;
+    }
+    .payment-form {
+      background: white;
+      border-radius: 32px;
+      padding: 28px;
+      border: 1px solid #E6E2D6;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+    }
+    .payment-form h3 {
+      font-size: 1.5rem;
+      margin-bottom: 24px;
+      color: #1E4226;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #2C4D2E;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #D4DCC8;
+      border-radius: 60px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      background: #FFFFFF;
+    }
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: #6BBF4A;
+      box-shadow: 0 0 0 3px rgba(107, 191, 74, 0.1);
+    }
+    .radio-group {
+      display: flex;
+      gap: 24px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 8px 16px;
+      background: #F4F9EF;
+      border-radius: 60px;
+      transition: all 0.2s;
+    }
+    .radio-option:hover {
+      background: #E5F5DD;
+    }
+    .radio-option input {
+      width: auto;
+      margin: 0;
+    }
+    .qr-link {
+      color: #2D6B38;
+      font-size: 0.85rem;
+      margin-top: 8px;
+      display: inline-block;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .file-upload {
+      border: 2px dashed #C5D9B8;
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #FEFCF8;
+    }
+    .file-upload:hover {
+      border-color: #6BBF4A;
+      background: #F9FDF5;
+    }
+    .file-upload input {
+      display: none;
+    }
+    .file-name {
+      font-size: 0.85rem;
+      color: #6E8263;
+      margin-top: 8px;
+    }
+    .submit-order {
+      width: 100%;
+      background: #2D6B38;
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 16px;
+    }
+    .submit-order:hover {
+      background: #3E7A4A;
+      transform: translateY(-2px);
+    }
+    /* QR Modal */
+    .qr-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(30, 51, 35, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 4000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+    .qr-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .qr-modal-content {
+      background: white;
+      border-radius: 48px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      padding: 32px;
+      transform: scale(0.9);
+      transition: transform 0.3s;
+    }
+    .qr-modal.active .qr-modal-content {
+      transform: scale(1);
+    }
+    .qr-modal-content img {
+      width: 250px;
+      height: 250px;
+      object-fit: contain;
+      margin: 20px 0;
+    }
+    .close-qr {
+      background: #1E4226;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 40px;
+      cursor: pointer;
+      margin-top: 16px;
+    }
+    @media (max-width: 800px) {
+      .checkout-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .order-summary {
+        position: relative;
+        top: 0;
+      }
+      .checkout-container {
+        padding: 120px 20px 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="nav-flex">
+    <div class="logo-png">
+      <a href="index.html"><img src="bio-logo.png" alt="Bio Enzyme Logo"></a>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#products">Products</a>
+      <a href="index.html#testimonials">Video stories</a>
+      <a href="shop.html" class="btn-shop">Shop now →</a>
+    </div>
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="close-menu" id="closeMenu">&times;</div>
+  <a href="index.html">Home</a>
+  <a href="index.html#about">About</a>
+  <a href="index.html#products">Products</a>
+  <a href="index.html#testimonials">Video stories</a>
+  <a href="shop.html" class="btn-shop-mobile">Shop now →</a>
+</div>
+
+<main>
+  <div class="checkout-container">
+    <div class="checkout-grid">
+      <!-- Order Summary -->
+      <div class="order-summary">
+        <h3><i class="fas fa-shopping-bag"></i> Order Summary</h3>
+        <div id="checkoutItemsList" class="checkout-items"></div>
+        <div class="checkout-total">
+          <span>Total Amount:</span>
+          <span id="checkoutTotalPrice" style="font-size: 1.5rem; color: #2D6B38;">P0</span>
+        </div>
+      </div>
+
+      <!-- Payment Form -->
+      <div class="payment-form">
+        <h3><i class="fas fa-credit-card"></i> Payment Details</h3>
+        <form id="paymentForm">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="fullName" required placeholder="Juan Dela Cruz">
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="phoneNumber" required placeholder="+63 912 345 6789">
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="email" required placeholder="hello@example.com">
+          </div>
+          <div class="form-group">
+            <label>Complete Address</label>
+            <textarea id="address" rows="2" required placeholder="Street, Barangay, City, Province, Zip Code"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Mode of Payment</label>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="paymentMethod" value="GCash" required> GCash
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="paymentMethod" value="PayMaya"> PayMaya
+              </label>
+            </div>
+            <div id="qrLinkContainer" style="margin-top: 8px;"></div>
+          </div>
+          <div class="form-group">
+            <label>Upload Payment Screenshot / Receipt</label>
+            <div class="file-upload" id="fileUploadArea">
+              <i class="fas fa-cloud-upload-alt" style="font-size: 2rem; color: #6BBF4A;"></i>
+              <p>Click to upload screenshot</p>
+              <input type="file" id="paymentScreenshot" accept="image/*">
+            </div>
+            <div class="file-name" id="fileNameDisplay">No file chosen</div>
+          </div>
+          <button type="submit" class="submit-order">Place Order →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- QR Code Modal -->
+<div id="qrModal" class="qr-modal">
+  <div class="qr-modal-content">
+    <i class="fas fa-qrcode" style="font-size: 3rem; color: #2D6B38;"></i>
+    <h3 id="qrTitle">GCash QR Code</h3>
+    <img id="qrImage" src="" alt="QR Code">
+    <p>Scan to pay using your GCash or PayMaya app</p>
+    <button class="close-qr" id="closeQrBtn">Close</button>
+  </div>
+</div>
+
+<script>
+  // Load cart data
+  let cart = JSON.parse(localStorage.getItem('bio_cart')) || [];
+  
+  function renderCheckoutSummary() {
+    const container = document.getElementById('checkoutItemsList');
+    const totalSpan = document.getElementById('checkoutTotalPrice');
+    if (!container) return;
+    
+    if (cart.length === 0) {
+      container.innerHTML = '<p style="text-align: center; padding: 40px;">Your cart is empty. <a href="shop.html" style="color: #2D6B38;">Go to shop</a></p>';
+      if (totalSpan) totalSpan.innerText = 'P0';
+      return;
+    }
+    
+    let html = '';
+    let total = 0;
+    cart.forEach(item => {
+      const itemTotal = item.price * item.quantity;
+      total += itemTotal;
+      html += `
+        <div class="checkout-item">
+          <div><strong>${item.name}</strong> x ${item.quantity}</div>
+          <div>$${itemTotal}</div>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+    if (totalSpan) totalSpan.innerText = `$${total}`;
+  }
+  
+  renderCheckoutSummary();
+  
+  // QR Code data (placeholder images)
+  const qrCodes = {
+    GCash: "https://placehold.co/400x400/2D6B38/white?text=GCash+QR+Code%0A09123456789",
+    PayMaya: "https://placehold.co/400x400/0054A6/white?text=PayMaya+QR+Code%0A09123456789"
+  };
+  
+  const qrModal = document.getElementById('qrModal');
+  const qrImage = document.getElementById('qrImage');
+  const qrTitle = document.getElementById('qrTitle');
+  const closeQrBtn = document.getElementById('closeQrBtn');
+  const qrLinkContainer = document.getElementById('qrLinkContainer');
+  
+  function showQrModal(method) {
+    if (method === 'GCash') {
+      qrImage.src = qrCodes.GCash;
+      qrTitle.innerText = 'GCash QR Code';
+    } else if (method === 'PayMaya') {
+      qrImage.src = qrCodes.PayMaya;
+      qrTitle.innerText = 'PayMaya QR Code';
+    }
+    qrModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  
+  function closeQrModal() {
+    qrModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  
+  closeQrBtn.addEventListener('click', closeQrModal);
+  qrModal.addEventListener('click', (e) => {
+    if (e.target === qrModal) closeQrModal();
+  });
+  
+  const radioButtons = document.querySelectorAll('input[name="paymentMethod"]');
+  function updateQrLink() {
+    const selected = document.querySelector('input[name="paymentMethod"]:checked');
+    if (selected) {
+      const method = selected.value;
+      qrLinkContainer.innerHTML = `<span class="qr-link" id="showQrLink"><i class="fas fa-qrcode"></i> Click here to view ${method} QR Code</span>`;
+      const link = document.getElementById('showQrLink');
+      if (link) {
+        link.addEventListener('click', () => showQrModal(method));
+      }
+    } else {
+      qrLinkContainer.innerHTML = '';
+    }
+  }
+  
+  radioButtons.forEach(radio => {
+    radio.addEventListener('change', updateQrLink);
+  });
+  
+  // File upload handling
+  const fileInput = document.getElementById('paymentScreenshot');
+  const fileNameDisplay = document.getElementById('fileNameDisplay');
+  const fileUploadArea = document.getElementById('fileUploadArea');
+  
+  fileUploadArea.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+      fileNameDisplay.innerText = e.target.files[0].name;
+    } else {
+      fileNameDisplay.innerText = 'No file chosen';
+    }
+  });
+  
+  // Form submission
+  const paymentForm = document.getElementById('paymentForm');
+  paymentForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    if (cart.length === 0) {
+      alert('Your cart is empty. Please add items before checkout.');
+      return;
+    }
+    
+    const fullName = document.getElementById('fullName').value.trim();
+    const phone = document.getElementById('phoneNumber').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+    const screenshot = fileInput.files[0];
+    
+    if (!fullName || !phone || !email || !address) {
+      alert('Please fill in all fields.');
+      return;
+    }
+    if (!paymentMethod) {
+      alert('Please select a payment method.');
+      return;
+    }
+    if (!screenshot) {
+      alert('Please upload a screenshot of your payment.');
+      return;
+    }
+    
+    const total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+    
+    // Create order object
+    const order = {
+      orderId: 'ORD-' + Date.now(),
+      date: new Date().toLocaleString(),
+      customer: { fullName, phone, email, address },
+      paymentMethod: paymentMethod.value,
+      items: cart.map(item => ({ name: item.name, quantity: item.quantity, price: item.price, total: item.price * item.quantity })),
+      totalAmount: total,
+      screenshotName: screenshot.name
+    };
+    
+    // Save order to localStorage
+    const orders = JSON.parse(localStorage.getItem('bio_orders')) || [];
+    orders.push(order);
+    localStorage.setItem('bio_orders', JSON.stringify(orders));
+    
+    // Clear cart
+    localStorage.removeItem('bio_cart');
+    
+    alert(`Order placed successfully!\nOrder ID: ${order.orderId}\nTotal: $${total}\nWe will process your order within 24 hours.\nA confirmation email will be sent to ${email}`);
+    
+    // Redirect to home
+    window.location.href = 'index.html';
+  });
+  
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const closeMenu = document.getElementById('closeMenu');
+  
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+  closeMenu.addEventListener('click', () => {
+    mobileMenu.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+  document.querySelectorAll('.mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  });
+  
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('header');
+    if (window.scrollY > 30) {
+      header.style.background = 'rgba(255, 252, 242, 0.95)';
+    } else {
+      header.style.background = 'rgba(255, 252, 242, 0.85)';
+    }
+  });
+</script>
+</body>
+</html>

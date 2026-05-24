@@ -6,808 +6,9 @@
   <title>Bio Enzyme | 100% Pure Organic — 4x Enzyme Elixirs</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background-color: #FDFBF7;
-      font-family: 'Inter', sans-serif;
-      color: #1E3323;
-      overflow-x: hidden;
-    }
-
-    h1, h2, h3, .logo-font {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
-
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 48px;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    .custom-cursor {
-      width: 28px;
-      height: 28px;
-      background: rgba(80, 140, 70, 0.25);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      backdrop-filter: blur(6px);
-      border: 1.5px solid rgba(100, 180, 80, 0.6);
-      transition: transform 0.08s linear;
-    }
-
-    header {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 60px);
-      max-width: 1360px;
-      z-index: 1000;
-      background: rgba(255, 252, 242, 0.85);
-      backdrop-filter: blur(12px);
-      border-radius: 100px;
-      border: 1px solid rgba(100, 150, 80, 0.3);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-      transition: all 0.3s;
-    }
-
-    .nav-flex {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 32px;
-    }
-
-    .logo-png {
-      display: flex;
-      align-items: center;
-    }
-    
-    .logo-png img {
-      height: 44px;
-      width: auto;
-      display: block;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
-      transition: transform 0.2s ease;
-    }
-    
-    .logo-png img:hover {
-      transform: scale(1.02);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 36px;
-      align-items: center;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      font-weight: 500;
-      color: #2C4D2E;
-      transition: 0.2s;
-      font-size: 0.95rem;
-      position: relative;
-    }
-
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: #6BBF4A;
-      transition: width 0.3s ease;
-    }
-
-    .nav-links a:hover::after, .nav-links a.active::after {
-      width: 100%;
-    }
-
-    .btn-shop {
-      background: #1E4226;
-      color: white !important;
-      padding: 8px 28px;
-      border-radius: 60px;
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-
-    .btn-shop:hover {
-      background: #3E7A4A;
-      transform: scale(1.02);
-      box-shadow: 0 6px 14px rgba(30, 66, 38, 0.2);
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      gap: 6px;
-      z-index: 1001;
-    }
-
-    .hamburger span {
-      width: 28px;
-      height: 2px;
-      background: #2C4D2E;
-      transition: all 0.3s ease;
-      border-radius: 2px;
-    }
-
-    .mobile-menu {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      background: rgba(255, 252, 242, 0.98);
-      backdrop-filter: blur(24px);
-      z-index: 2000;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 32px;
-      transform: translateY(-100%);
-      transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-    }
-
-    .mobile-menu.active {
-      transform: translateY(0);
-    }
-
-    .mobile-menu a {
-      text-decoration: none;
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: #2C4D2E;
-      padding: 12px 0;
-      transition: 0.2s;
-      font-family: 'Space Grotesk', sans-serif;
-    }
-
-    .mobile-menu a:hover {
-      color: #5DA05A;
-      transform: scale(1.05);
-    }
-
-    .mobile-menu .btn-shop-mobile {
-      background: #1E4226;
-      color: white;
-      padding: 14px 40px;
-      border-radius: 60px;
-      font-size: 1.2rem;
-      margin-top: 16px;
-    }
-
-    .close-menu {
-      position: absolute;
-      top: 32px;
-      right: 32px;
-      font-size: 40px;
-      cursor: pointer;
-      color: #2C4D2E;
-      font-weight: 300;
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 140px 0 80px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* GRADIENT BACKGROUND BEHIND HERO IMAGES */
-    .hero-gradient-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 30% 40%, rgba(120, 180, 90, 0.15), rgba(200, 220, 160, 0.08), transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .hero-bg-wave {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 40%;
-      background: radial-gradient(ellipse at 20% 80%, rgba(170, 220, 120, 0.2), transparent);
-      pointer-events: none;
-    }
-
-    .hero-grid {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 50px;
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero-content {
-      flex: 1;
-      position: relative;
-      z-index: 10;
-    }
-
-    .badge-fresh {
-      background: #E5F5DD;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 20px;
-      border-radius: 60px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #367A46;
-      margin-bottom: 24px;
-      border: 1px solid #B8DCAA;
-    }
-
-    .hero-content h1 {
-      font-size: 4.2rem;
-      line-height: 1.1;
-      margin-bottom: 24px;
-    }
-
-    .hero-content .highlight {
-      color: #4B8C3F;
-      border-bottom: 3px solid #B9E0A4;
-    }
-
-    .hero-content p {
-      font-size: 1.15rem;
-      line-height: 1.5;
-      color: #4F6148;
-      margin-bottom: 36px;
-      max-width: 90%;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      margin-bottom: 48px;
-    }
-
-    .btn-primary {
-      background: #2D6B38;
-      border: none;
-      padding: 14px 34px;
-      border-radius: 60px;
-      font-weight: 600;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 6px 12px rgba(45, 107, 56, 0.2);
-    }
-
-    .btn-primary:hover {
-      background: #438F51;
-      transform: translateY(-3px);
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 1.5px solid #9CCC8A;
-      padding: 14px 34px;
-      border-radius: 60px;
-      font-weight: 600;
-      color: #2C6037;
-      transition: 0.2s;
-      cursor: pointer;
-    }
-
-    .hero-stats {
-      display: flex;
-      gap: 40px;
-    }
-
-    .stat h3 {
-      font-size: 1.8rem;
-      font-weight: 700;
-    }
-
-    .hero-visual {
-      flex: 1;
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 540px;
-      perspective: 900px;
-      z-index: 5;
-    }
-
-    .image-stack {
-      position: relative;
-      width: 100%;
-      max-width: 620px;
-      height: 500px;
-      margin: 0 auto;
-      transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.2);
-    }
-
-    .stack-img {
-      position: absolute;
-      transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.2);
-      object-fit: cover;
-      will-change: transform, opacity;
-    }
-
-    /* Desktop styles */
-    .stack-img-back {
-      width: 120%;
-      left: 7%;
-      top: 8%;
-      z-index: 1;
-      opacity: 0.75;
-      filter: brightness(0.96);
-      transform: scale(0.92);
-    }
-
-    .stack-img-left {
-      width: 38%;
-      left: 2%;
-      bottom: 8%;
-      z-index: 3;
-      top: auto;
-    }
-    .stack-img-center {
-      width: 50%;
-      left: 28%;
-      bottom: 2%;
-      z-index: 4;
-      top: auto;
-    }
-    .stack-img-right {
-      width: 38%;
-      right: 2%;
-      bottom: 20%;
-      z-index: 2;
-      top: auto;
-    }
-
-    .image-stack:hover .stack-img {
-      filter: brightness(1.02) saturate(1.04);
-      transition: 0.3s;
-    }
-
-    .section {
-      padding: 100px 0;
-    }
-
-    .section-title {
-      font-size: 2.8rem;
-      text-align: center;
-      margin-bottom: 16px;
-    }
-
-    .section-sub {
-      text-align: center;
-      font-size: 1.05rem;
-      color: #6E8263;
-      margin-bottom: 60px;
-    }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 40px;
-    }
-
-    .product-card {
-      background: white;
-      border-radius: 40px;
-      padding: 0 0 28px 0;
-      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      border: 1px solid #F0E9DE;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
-      text-align: center;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-card:hover {
-      transform: translateY(-15px) scale(1.02);
-      border-color: #C7E3B6;
-      box-shadow: 0 40px 50px -25px rgba(60, 110, 50, 0.3);
-    }
-
-    .product-img {
-      width: 100%;
-      height: 260px;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-    }
-
-    .product-card:hover .product-img {
-      transform: scale(1.05);
-    }
-
-    .product-card h3 {
-      margin: 24px 0 8px;
-      padding: 0 16px;
-    }
-
-    .product-card p {
-      padding: 0 20px;
-      flex-grow: 1;
-    }
-
-    .price {
-      font-size: 28px;
-      font-weight: 700;
-      color: #317A3F;
-      margin: 16px 0;
-    }
-
-    .product-card .btn-outline {
-      margin: 0 auto 20px auto;
-      display: inline-block;
-      width: auto;
-      min-width: 160px;
-    }
-
-    .video-section {
-      background: linear-gradient(145deg, #F4F9EF, #FDF9F2);
-      border-radius: 64px;
-      margin: 20px 20px;
-      padding: 70px 0;
-    }
-
-    .video-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 32px;
-      justify-content: center;
-    }
-
-    .video-card {
-      width: 340px;
-      background: rgba(255, 255, 245, 0.9);
-      backdrop-filter: blur(4px);
-      border-radius: 36px;
-      overflow: hidden;
-      transition: all 0.35s ease;
-      border: 1px solid #E2EAD9;
-    }
-
-    .video-card:hover {
-      transform: translateY(-10px) scale(1.02);
-      border-color: #B9DBA5;
-    }
-
-    .video-wrapper {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%;
-      background: #CAE0BC;
-    }
-
-    .video-wrapper iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-
-    .testimonial-info {
-      padding: 20px;
-    }
-
-    .stars {
-      color: #F5B642;
-      margin: 8px 0;
-    }
-
-    .cta-modern {
-      background: #1E4226;
-      border-radius: 64px;
-      padding: 64px 40px;
-      text-align: center;
-      color: white;
-      transition: transform 0.3s;
-    }
-
-    footer {
-      background: #1B2A1A;
-      color: #CBE2C1;
-      padding: 48px 0 32px;
-      border-radius: 40px 40px 0 0;
-      margin-top: 60px;
-    }
-
-    .footer-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 40px;
-      margin-bottom: 40px;
-    }
-
-    .footer-col {
-      flex: 1;
-      min-width: 180px;
-    }
-
-    .footer-col h4 {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-      color: #E0F0D0;
-      font-weight: 600;
-    }
-
-    .footer-col p, .footer-col a {
-      color: #CBE2C1;
-      text-decoration: none;
-      line-height: 1.8;
-      transition: color 0.2s;
-    }
-
-    .footer-col a:hover {
-      color: #A8D89C;
-    }
-
-    .social-links {
-      display: flex;
-      gap: 18px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
-
-    .social-links a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: rgba(200, 220, 180, 0.15);
-      border-radius: 50%;
-      transition: all 0.2s;
-      font-size: 1.2rem;
-    }
-
-    .social-links a:hover {
-      background: #5A9E4E;
-      transform: translateY(-3px);
-      color: white;
-    }
-
-    .footer-bottom {
-      text-align: center;
-      padding-top: 30px;
-      border-top: 1px solid #3A5A36;
-      font-size: 0.8rem;
-    }
-
-    /* ===== MOBILE RESPONSIVE - Lower position on entry, splash bigger ===== */
-    @media (max-width: 1000px) {
-      .container { padding: 0 28px; }
-      .hero-content h1 { font-size: 2.8rem; }
-      .hero-content p { max-width: 100%; }
-      
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      
-      .hero-grid {
-        flex-direction: column;
-        gap: 20px;
-        padding-top: 20px;
-      }
-      
-      .hero-visual {
-        position: relative;
-        width: 100%;
-        min-height: 360px;
-        margin: 0;
-        order: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      
-      .image-stack {
-        position: relative;
-        width: 100%;
-        height: 360px;
-        max-width: 420px;
-        margin: 0 auto;
-        transform: translateY(30px);
-        transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.2);
-      }
-      
-      .stack-img { 
-        box-shadow: none !important; 
-        border-radius: 28px !important; 
-        border: none !important; 
-      }
-      
-      /* DEFAULT LARGE MODE - images bigger, splash bigger */
-      .image-stack.large-mode .stack-img-back {
-        width: 110%;
-        left: -5%;
-        top: -5%;
-        bottom: -50%;
-        transform: scale(1.1);
-        opacity: 0.5;
-        z-index: 1;
-      }
-      .image-stack.large-mode .stack-img-left {
-        width: 52%;
-        left: -2%;
-        bottom: -50%;
-        z-index: 3;
-        opacity: 0.9;
-      }
-      .image-stack.large-mode .stack-img-center {
-        width: 56%;
-        left: 24%;
-        bottom: -50%;
-        z-index: 4;
-        opacity: 0.95;
-      }
-      .image-stack.large-mode .stack-img-right {
-        width: 52%;
-        right: -2%;
-        bottom: -62%;
-        z-index: 2;
-        opacity: 0.9;
-      }
-      
-      /* SMALL MODE - images become smaller */
-      .image-stack.small-mode {
-        transform: translateY(20px);
-      }
-      .image-stack.small-mode .stack-img-back {
-        width: 90%;
-        left: 5%;
-        top: 5%;
-        transform: scale(0.9);
-        opacity: 0.4;
-      }
-      .image-stack.small-mode .stack-img-left {
-        width: 42%;
-        left: 3%;
-        bottom: 5%;
-        transform: scale(0.95);
-        opacity: 0.85;
-      }
-      .image-stack.small-mode .stack-img-center {
-        width: 46%;
-        left: 28%;
-        bottom: 0%;
-        transform: scale(0.95);
-        opacity: 0.9;
-      }
-      .image-stack.small-mode .stack-img-right {
-        width: 42%;
-        right: 3%;
-        bottom: 12%;
-        transform: scale(0.95);
-        opacity: 0.85;
-      }
-      
-      .hero-content {
-        text-align: center;
-        z-index: 10;
-        position: relative;
-        background: rgba(253, 251, 247, 0.92);
-        backdrop-filter: blur(12px);
-        border-radius: 40px;
-        padding: 24px 20px;
-        margin: 10px 0 20px;
-        width: 100%;
-        transition: opacity 0.4s ease, transform 0.4s ease;
-        opacity: 0;
-        transform: translateY(20px);
-        pointer-events: none;
-        order: 2;
-      }
-      
-      .hero-content.visible {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-      }
-      
-      /* Circle toggle button */
-      .circle-toggle-btn {
-        position: fixed;
-        bottom: 24px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 56px;
-        height: 56px;
-        background: #2D6B38;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 100;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        transition: all 0.3s ease;
-        border: 2px solid rgba(255, 255, 245, 0.5);
-        color: white;
-        font-size: 1.3rem;
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-      }
-      
-      .circle-toggle-btn.visible {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-      }
-      
-      .circle-toggle-btn:hover {
-        background: #438F51;
-        transform: translateX(-50%) scale(1.05);
-      }
-      
-      .hero-buttons { justify-content: center; }
-      .hero-stats { justify-content: center; flex-wrap: wrap; gap: 24px; }
-      .badge-fresh { background: rgba(229, 245, 221, 0.95); backdrop-filter: blur(1px); }
-      .hero-content p { color: #2A3D25; font-weight: 500; font-size: 1rem; }
-      .stat h3 { font-size: 1.5rem; }
-      
-      .footer-grid { flex-direction: column; gap: 30px; }
-      .footer-col { text-align: center; }
-      .social-links { justify-content: center; }
-    }
-
-    @media (max-width: 768px) {
-      .hero-content h1 { font-size: 2.4rem; }
-      .hero-content { padding: 20px 16px; }
-      .hero-visual { min-height: 320px; }
-      .image-stack { height: 320px; max-width: 380px; transform: translateY(25px); }
-      .circle-toggle-btn { width: 50px; height: 50px; bottom: 20px; font-size: 1.2rem; }
-    }
-
-    @media (max-width: 600px) {
-      .hero-content h1 { font-size: 2rem; }
-      .hero-content { padding: 18px 14px; }
-      .hero-visual { min-height: 280px; }
-      .image-stack { height: 280px; max-width: 320px; transform: translateY(20px); }
-      .circle-toggle-btn { width: 46px; height: 46px; bottom: 16px; font-size: 1.1rem; }
-    }
-    
-    @media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-      .image-stack { transform: translateY(40px); }
-      .hero-visual { min-height: 400px; }
-      .image-stack { height: 400px; max-width: 500px; }
-    }
-  </style>
 </head>
 <body>
 
@@ -819,10 +20,11 @@
       <img src="bio-logo.png" alt="Bio Enzyme Logo">
     </div>
     <div class="nav-links">
-      <a href="#home">Home</a>
-      <a href="#products">Products</a>
-      <a href="#testimonials">Video stories</a>
-      <a href="#shop" class="btn-shop">Shop now →</a>
+      <a href="index.html">Home</a>
+      <a href="index.html#about">About</a>
+      <a href="index.html#products">Products</a>
+      <a href="index.html#testimonials">Video stories</a>
+      <a href="shop.html" class="btn-shop">Shop now →</a>
     </div>
     <div class="hamburger" id="hamburger">
       <span></span>
@@ -834,15 +36,15 @@
 
 <div class="mobile-menu" id="mobileMenu">
   <div class="close-menu" id="closeMenu">&times;</div>
-  <a href="#home">Home</a>
-  <a href="#products">Products</a>
-  <a href="#testimonials">Video stories</a>
-  <a href="#shop" class="btn-shop-mobile">Shop now →</a>
+  <a href="index.html">Home</a>
+  <a href="index.html#about">About</a>
+  <a href="index.html#products">Products</a>
+  <a href="index.html#testimonials">Video stories</a>
+  <a href="shop.html" class="btn-shop-mobile">Shop now →</a>
 </div>
 
 <main>
   <section id="home" class="hero">
-    <!-- GRADIENT BACKGROUND BEHIND HERO IMAGES -->
     <div class="hero-gradient-bg"></div>
     <div class="hero-bg-wave"></div>
     <div class="container hero-grid">
@@ -860,7 +62,7 @@
           <div class="stat"><h3>0%</h3><p>sugar / preservatives</p></div>
         </div>
       </div>
-      <div class="hero-visual">
+      <div class="hero-visual" id="heroVisual">
         <div class="image-stack" id="imageStack">
           <img class="stack-img stack-img-back" src="splash.png" alt="Organic enzyme background essence">
           <img class="stack-img stack-img-left" src="bottle-2.png" alt="Citrus enzyme bottle">
@@ -871,38 +73,59 @@
     </div>
   </section>
 
+  <section id="about" class="section" style="padding-top: 40px;">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-content">
+          <h3>Rooted in nature, fermented with purpose</h3>
+          <div class="about-lead">We don't make enzymes — we awaken wild fermentation that has nourished for millennia.</div>
+          <p>Bio Enzyme was born from one question: what if we could capture the intelligence of living ferments and bring it back to daily life? Our founder, a biochemist and herbalist, studied traditional practices across the globe. The result is a range of organic, lab-verified enzyme elixirs for digestion, energy, and cellular harmony.</p>
+          <p>Every bottle undergoes slow, wild fermentation in small batches using heirloom fruits, mountain botanicals, and pure spring water. No shortcuts. Just the ancient rhythm of microbes transforming raw ingredients into potent, bioavailable nutrition.</p>
+          <div class="about-stats-inline">
+            <span class="about-stat-item">USDA Organic</span>
+            <span class="about-stat-item">Lab tested potency</span>
+            <span class="about-stat-item">Carbon neutral</span>
+          </div>
+        </div>
+        <div class="about-visual">
+          <img src="aboutus.png" alt="Fermentation craft">
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="products" class="section">
     <div class="container">
       <h2 class="section-title">enzyme elixirs & food blends</h2>
       <div class="section-sub">crafted with fermentation wisdom • each drop alive with probiotics</div>
       <div class="products-grid">
-        <div class="product-card">
-          <img class="product-img" src="https://placehold.co/600x500/E8F2E2/3A7645?text=CITRUS+ZEST" alt="Citrus enzyme">
+        <div class="product-card" data-id="1" data-name="Citrus Zest Splash" data-price="32">
+          <img class="product-img" src="item-1.png" alt="Citrus enzyme">
           <h3>Citrus Zest Splash</h3>
           <p>Orange, lemon, ginger — bright digestive enzyme concentrate.</p>
-          <div class="price">$32</div>
-          <button class="btn-outline" style="border-color:#9ACC88;" onclick="alert('Citrus enzyme added')">Add to cart →</button>
+          <div class="price">P32</div>
+          <button class="btn-outline add-to-cart-btn" style="border-color:#9ACC88;">Add to cart →</button>
         </div>
-        <div class="product-card">
-          <img class="product-img" src="https://placehold.co/600x500/EFE6D8/5B8C4E?text=APPLE+CIDER" alt="Apple cider">
+        <div class="product-card" data-id="2" data-name="Raw Apple Cider" data-price="28">
+          <img class="product-img" src="item-2.png" alt="Apple cider">
           <h3>Raw Apple Cider</h3>
           <p>With 'mother' enzymes. Raw, unfiltered, organic apple magic.</p>
-          <div class="price">$28</div>
-          <button class="btn-outline" style="border-color:#9ACC88;" onclick="alert('Apple Cider added')">Add to cart →</button>
+          <div class="price">P28</div>
+          <button class="btn-outline add-to-cart-btn" style="border-color:#9ACC88;">Add to cart →</button>
         </div>
-        <div class="product-card">
-          <img class="product-img" src="https://placehold.co/600x500/D9E8D0/3A6B3A?text=GREEN+POWDER" alt="Green powder">
+        <div class="product-card" data-id="3" data-name="Green Ferment Powder" data-price="46">
+          <img class="product-img" src="item-3.png" alt="Green powder">
           <h3>Green Ferment Powder</h3>
           <p>Spirulina, wheatgrass, digestive enzymes — superfood blend.</p>
-          <div class="price">$46</div>
-          <button class="btn-outline" style="border-color:#9ACC88;" onclick="alert('Green powder added')">Add to cart →</button>
+          <div class="price">P46</div>
+          <button class="btn-outline add-to-cart-btn" style="border-color:#9ACC88;">Add to cart →</button>
         </div>
-        <div class="product-card">
-          <img class="product-img" src="https://placehold.co/600x500/F5E6D4/A86F4B?text=HIBISCUS" alt="Hibiscus elixir">
+        <div class="product-card" data-id="4" data-name="Hibiscus Bloom Elixir" data-price="36">
+          <img class="product-img" src="item-4.png" alt="Hibiscus elixir">
           <h3>Hibiscus Bloom Elixir</h3>
           <p>Floral + antioxidant rich enzyme for glow and gut health.</p>
-          <div class="price">$36</div>
-          <button class="btn-outline" style="border-color:#9ACC88;" onclick="alert('Hibiscus added')">Add to cart →</button>
+          <div class="price">P36</div>
+          <button class="btn-outline add-to-cart-btn" style="border-color:#9ACC88;">Add to cart →</button>
         </div>
       </div>
     </div>
@@ -915,7 +138,7 @@
       <div class="video-grid">
         <div class="video-card">
           <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/YQHsXMglC9A?rel=0&modestbranding=1" title="Testimonial 1" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/-J1Kiz8Pe-I?si=8Sd1PIto4OhoUsHs" title="Testimonial 1" allowfullscreen></iframe>
           </div>
           <div class="testimonial-info">
             <h4>Sophia Chen <span style="font-weight: normal;">@guthealthsoph</span></h4>
@@ -925,7 +148,7 @@
         </div>
         <div class="video-card">
           <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/5P3HeQk8dM4?rel=0" title="Testimonial 2" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/KqGC-5lq3Cw?si=07LuCZJbZAissSlO" title="Testimonial 2" allowfullscreen></iframe>
           </div>
           <div class="testimonial-info">
             <h4>Marcus V. — Farm-to-table Chef</h4>
@@ -935,7 +158,7 @@
         </div>
         <div class="video-card">
           <div class="video-wrapper">
-            <iframe src="https://www.youtube.com/embed/k7V_vCQsntY?rel=0" title="Testimonial 3" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/-QfHagGIoCg?si=I2_qEx7viRNndaqP" title="Testimonial 3" allowfullscreen></iframe>
           </div>
           <div class="testimonial-info">
             <h4>Priya Sharma — Yoga & Wellness</h4>
@@ -956,7 +179,7 @@
         <i class="fas fa-seedling" style="font-size: 48px; opacity: 0.9; margin-bottom: 16px; display: inline-block;"></i>
         <h2 style="font-size: 2.2rem;">100% pure • lab tested • wild fermentation</h2>
         <p style="max-width: 550px; margin: 16px auto;">Join the enzyme revolution — organic, regenerative, and alive.</p>
-        <button class="btn-outline" style="background: white; color:#1E4226; border:none; margin-top: 16px;" onclick="alert('Get your starter kit now!')">Shop all products →</button>
+        <button class="btn-outline" style="background: white; color:#1E4226; border:none; margin-top: 16px;" onclick="window.location.href='shop.html'">Shop all products →</button>
       </div>
     </div>
   </section>
@@ -1004,211 +227,36 @@
   </div>
 </footer>
 
+<!-- FLOATING CART FAB -->
+<div class="cart-fab" id="cartFab">
+  <i class="fas fa-shopping-bag"></i>
+  <span class="cart-fab-badge" id="cartFabBadge">0</span>
+</div>
+
+<!-- CART MODAL -->
+<div id="cartModal" class="cart-modal">
+  <div class="cart-modal-content">
+    <div class="cart-header">
+      <h2><i class="fas fa-shopping-bag" style="margin-right: 10px;"></i> Your cart</h2>
+      <i class="fas fa-times close-cart" id="closeCartBtn"></i>
+    </div>
+    <div id="cartItemsContainer" class="cart-items-list">
+      <div class="empty-cart-msg">Your cart is empty.</div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display: none;">
+      <div class="cart-total-row">
+        <span>Total</span>
+        <span id="cartTotalPrice">P0</span>
+      </div>
+      <button class="checkout-btn" id="proceedToPaymentBtn">Proceed to payment →</button>
+    </div>
+  </div>
+</div>
+
 <div class="circle-toggle-btn" id="circleToggleBtn">
   <i class="fas fa-chevron-up"></i>
 </div>
 
-<script>
-  const toggleBtn = document.getElementById('circleToggleBtn');
-  const heroContent = document.getElementById('heroContent');
-  const heroSection = document.getElementById('home');
-  const imageStack = document.getElementById('imageStack');
-  let isSmallMode = false;
-  let animationInProgress = false;
-  
-  function updateButtonVisibility() {
-    if (window.innerWidth <= 1000) {
-      const heroRect = heroSection.getBoundingClientRect();
-      const isHeroInView = heroRect.top <= window.innerHeight / 2 && heroRect.bottom >= window.innerHeight / 4;
-      
-      if (isHeroInView && toggleBtn && !animationInProgress) {
-        toggleBtn.classList.add('visible');
-      } else if (toggleBtn && !animationInProgress) {
-        toggleBtn.classList.remove('visible');
-      }
-    } else if (toggleBtn) {
-      toggleBtn.classList.remove('visible');
-    }
-  }
-  
-  function switchToSmallMode() {
-    if (animationInProgress) return;
-    animationInProgress = true;
-    
-    imageStack.classList.remove('large-mode');
-    imageStack.classList.add('small-mode');
-    toggleBtn.innerHTML = '<i class="fas fa-chevron-down"></i>';
-    heroContent.classList.add('visible');
-    isSmallMode = true;
-    
-    gsap.to(imageStack, { duration: 0.5, scale: 0.95, y: 20, ease: "power2.out", onComplete: () => { animationInProgress = false; updateButtonVisibility(); } });
-  }
-  
-  function switchToLargeMode() {
-    if (animationInProgress) return;
-    animationInProgress = true;
-    
-    imageStack.classList.remove('small-mode');
-    imageStack.classList.add('large-mode');
-    toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
-    heroContent.classList.remove('visible');
-    isSmallMode = false;
-    
-    gsap.to(imageStack, { duration: 0.5, scale: 1, y: 30, ease: "back.out(0.5)", onComplete: () => { animationInProgress = false; updateButtonVisibility(); } });
-  }
-  
-  function initMobileToggle() {
-    if (window.innerWidth <= 1000) {
-      // Start with LARGE mode (images bigger, text hidden, lower position)
-      imageStack.classList.add('large-mode');
-      imageStack.classList.remove('small-mode');
-      heroContent.classList.remove('visible');
-      isSmallMode = false;
-      if (toggleBtn) toggleBtn.innerHTML = '<i class="fas fa-chevron-up"></i>';
-      updateButtonVisibility();
-      
-      if (toggleBtn) {
-        toggleBtn.onclick = function(e) {
-          e.stopPropagation();
-          if (animationInProgress) return;
-          
-          if (isSmallMode) {
-            switchToLargeMode();
-          } else {
-            switchToSmallMode();
-          }
-        };
-      }
-    } else {
-      // Desktop: always show content, remove special classes
-      if (heroContent) heroContent.classList.add('visible');
-      if (imageStack) {
-        imageStack.classList.remove('large-mode', 'small-mode');
-      }
-      if (toggleBtn) toggleBtn.classList.remove('visible');
-    }
-  }
-
-  // Hamburger Menu Logic
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const closeMenu = document.getElementById('closeMenu');
-
-  function openMenu() {
-    mobileMenu.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeMenuFunc() {
-    mobileMenu.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  hamburger.addEventListener('click', openMenu);
-  closeMenu.addEventListener('click', closeMenuFunc);
-  
-  const mobileLinks = mobileMenu.querySelectorAll('a');
-  mobileLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      closeMenuFunc();
-      const targetId = link.getAttribute('href');
-      if (targetId && targetId !== "#" && targetId !== "#shop") {
-        const target = document.querySelector(targetId);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    });
-  });
-
-  const cursor = document.querySelector('.custom-cursor');
-  if (cursor && window.innerWidth > 1000) {
-    document.addEventListener('mousemove', (e) => {
-      cursor.style.left = e.clientX - 14 + 'px';
-      cursor.style.top = e.clientY - 14 + 'px';
-    });
-  } else if (cursor && window.innerWidth <= 1000) {
-    cursor.style.display = 'none';
-  }
-
-  gsap.registerPlugin(ScrollTrigger);
-  gsap.utils.toArray('.product-card, .video-card, .cta-modern, .section-title, .section-sub').forEach((el) => {
-    gsap.from(el, {
-      scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' },
-      opacity: 0, y: 50, duration: 0.8, ease: 'power2.out'
-    });
-  });
-
-  function initAnimations() {
-    const isMobileNow = window.innerWidth <= 1000;
-    gsap.killTweensOf('.stack-img-back, .stack-img-left, .stack-img-center, .stack-img-right, .image-stack');
-    
-    if (!isMobileNow) {
-      gsap.set('.stack-img-back', { scale: 0.6, opacity: 0, y: 30, rotation: -2 });
-      gsap.set('.stack-img-left', { scale: 0.65, opacity: 0, x: -40, rotation: -6 });
-      gsap.set('.stack-img-center', { scale: 0.65, opacity: 0, y: 50, rotation: 2 });
-      gsap.set('.stack-img-right', { scale: 0.65, opacity: 0, x: 40, rotation: 5 });
-
-      const masterTimeline = gsap.timeline({ defaults: { duration: 1.1, ease: "back.out(0.65)" } });
-      masterTimeline
-        .to('.stack-img-back', { scale: 0.94, opacity: 0.9, y: 0, rotation: 0, duration: 1.2 }, 0)
-        .to('.stack-img-left', { scale: 1, opacity: 1, x: 0, rotation: 0, duration: 1.1 }, 0.25)
-        .to('.stack-img-center', { scale: 1, opacity: 1, y: 0, rotation: 0, duration: 1.1 }, 0.45)
-        .to('.stack-img-right', { scale: 1, opacity: 1, x: 0, rotation: 0, duration: 1.1 }, 0.65)
-        .to('.image-stack', { y: -6, duration: 2.8, repeat: -1, yoyo: true, ease: "sine.inOut" }, "+=0.3");
-    } else {
-      // For mobile, fade in the images (starting lower)
-      gsap.set('.stack-img-back', { opacity: 0, y: 20 });
-      gsap.set('.stack-img-left', { opacity: 0, y: 20 });
-      gsap.set('.stack-img-center', { opacity: 0, y: 20 });
-      gsap.set('.stack-img-right', { opacity: 0, y: 20 });
-      
-      const mobileTimeline = gsap.timeline({ defaults: { duration: 0.7, ease: "back.out(0.7)" } });
-      mobileTimeline
-        .to('.stack-img-back', { opacity: 0.5, y: 0, duration: 0.6 }, 0)
-        .to('.stack-img-left', { opacity: 0.9, y: 0, duration: 0.6 }, 0.15)
-        .to('.stack-img-center', { opacity: 0.95, y: 0, duration: 0.6 }, 0.3)
-        .to('.stack-img-right', { opacity: 0.9, y: 0, duration: 0.6 }, 0.45);
-    }
-  }
-  
-  initAnimations();
-  initMobileToggle();
-  
-  window.addEventListener('scroll', () => {
-    updateButtonVisibility();
-    
-    const header = document.querySelector('header');
-    if (window.scrollY > 30) {
-      header.style.background = 'rgba(255, 252, 242, 0.95)';
-      header.style.backdropFilter = 'blur(16px)';
-    } else {
-      header.style.background = 'rgba(255, 252, 242, 0.85)';
-    }
-  });
-  
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      initAnimations();
-      initMobileToggle();
-      updateButtonVisibility();
-    }, 250);
-  });
-
-  document.querySelectorAll('.nav-links a').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      const targetId = this.getAttribute('href');
-      if (targetId === "#" || targetId === "") return;
-      const target = document.querySelector(targetId);
-      if (target && targetId !== '#shop') {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
-</script>
+<script src="script.js"></script>
 </body>
 </html>
