@@ -71,14 +71,14 @@ function renderCartModal() {
       <div class="cart-item" data-id="${item.id}">
         <div class="cart-item-info">
           <div class="cart-item-name">${item.name}</div>
-          <div class="cart-item-price">P${item.price} each</div>
+          <div class="cart-item-price">₱${item.price} each</div>
         </div>
         <div class="cart-item-quantity">
           <button class="qty-btn dec-qty" data-id="${item.id}">−</button>
           <span class="cart-item-qty">${item.quantity}</span>
           <button class="qty-btn inc-qty" data-id="${item.id}">+</button>
         </div>
-        <div class="cart-item-total">P${itemTotal}</div>
+        <div class="cart-item-total">₱${itemTotal}</div>
         <div class="remove-item" data-id="${item.id}"><i class="fas fa-trash-alt"></i></div>
       </div>
     `;
@@ -86,7 +86,7 @@ function renderCartModal() {
   container.innerHTML = html;
   if (footerDiv) footerDiv.style.display = 'block';
   const totalSpan = document.getElementById('cartTotalPrice');
-  if (totalSpan) totalSpan.innerText = `P${total}`;
+  if (totalSpan) totalSpan.innerText = `₱${total}`;
   
   document.querySelectorAll('.dec-qty').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -166,14 +166,14 @@ document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
 
 // ==================== SHOP PAGE PRODUCTS ====================
 const productsData = [
-  { id: 1, name: "Citrus Zest Splash", desc: "Bright digestive enzyme concentrate with orange, lemon, ginger.", price: 32, category: "elixir", img: "https://placehold.co/600x700/E8F2E2/3A7645?text=CITRUS+ELIXIR" },
-  { id: 2, name: "Raw Apple Cider", desc: "With 'mother' enzymes. Raw, unfiltered, organic apple magic.", price: 28, category: "cider", img: "https://placehold.co/600x700/EFE6D8/5B8C4E?text=APPLE+CIDER" },
-  { id: 3, name: "Green Ferment Powder", desc: "Spirulina, wheatgrass, digestive enzymes — superfood blend.", price: 46, category: "powder", img: "https://placehold.co/600x700/D9E8D0/3A6B3A?text=GREEN+POWDER" },
-  { id: 4, name: "Hibiscus Bloom Elixir", desc: "Floral + antioxidant rich enzyme for glow and gut health.", price: 36, category: "elixir", img: "https://placehold.co/600x700/F5E6D4/A86F4B?text=HIBISCUS+ELIXIR" },
-  { id: 5, name: "Turmeric Fire Tonic", desc: "Golden enzyme with turmeric, black pepper & wild honey.", price: 34, category: "elixir", img: "https://placehold.co/600x700/FFE6C7/B87A3A?text=TURMERIC+TONIC" },
-  { id: 6, name: "Berry Digest Spark", desc: "Mixed berry ferment for gentle digestion & antioxidant boost.", price: 31, category: "elixir", img: "https://placehold.co/600x700/E8D8F0/7B4F8C?text=BERRY+SPARK" },
-  { id: 7, name: "Moringa Enzyme Powder", desc: "Leafy green superfood + plant enzymes for daily vitality.", price: 42, category: "powder", img: "https://placehold.co/600x700/CDE8D0/4F7A4A?text=MORINGA+POWDER" },
-  { id: 8, name: "Ginger Lime Fizz", desc: "Zesty living soda concentrate — probiotic & sugar-free.", price: 29, category: "elixir", img: "https://placehold.co/600x700/F2F0D7/A3A54B?text=GINGER+LIME" }
+  { id: 1, name: "Citrus Zest Splash", desc: "Bright digestive enzyme concentrate with orange, lemon, ginger.", price: 32, category: "elixir", img: "item-1.png" },
+  { id: 2, name: "Raw Apple Cider", desc: "With 'mother' enzymes. Raw, unfiltered, organic apple magic.", price: 28, category: "cider", img: "item-2.png" },
+  { id: 3, name: "Green Ferment Powder", desc: "Spirulina, wheatgrass, digestive enzymes — superfood blend.", price: 46, category: "powder", img: "item-3.png" },
+  { id: 4, name: "Hibiscus Bloom Elixir", desc: "Floral + antioxidant rich enzyme for glow and gut health.", price: 36, category: "elixir", img: "item-4.png" },
+  { id: 5, name: "Turmeric Fire Tonic", desc: "Golden enzyme with turmeric, black pepper & wild honey.", price: 34, category: "elixir", img: "item-1.png" },
+  { id: 6, name: "Berry Digest Spark", desc: "Mixed berry ferment for gentle digestion & antioxidant boost.", price: 31, category: "elixir", img: "item-2.png" },
+  { id: 7, name: "Moringa Enzyme Powder", desc: "Leafy green superfood + plant enzymes for daily vitality.", price: 42, category: "powder", img: "item-3.png" },
+  { id: 8, name: "Ginger Lime Fizz", desc: "Zesty living soda concentrate — probiotic & sugar-free.", price: 29, category: "elixir", img: "item-4.png" }
 ];
 
 const productsGrid = document.getElementById('productsGrid');
@@ -187,7 +187,7 @@ if (productsGrid) {
         <img class="product-img-shop" src="${product.img}" alt="${product.name}">
         <h3>${product.name}</h3>
         <div class="product-desc">${product.desc}</div>
-        <div class="price-shop">$${product.price}</div>
+        <div class="price-shop">₱${product.price}</div>
         <button class="add-to-cart" data-id="${product.id}">Add to cart</button>
       </div>
     `).join('');

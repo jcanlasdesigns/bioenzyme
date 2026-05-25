@@ -336,7 +336,7 @@
     
     if (cart.length === 0) {
       container.innerHTML = '<p style="text-align: center; padding: 40px;">Your cart is empty. <a href="shop.html" style="color: #2D6B38;">Go to shop</a></p>';
-      if (totalSpan) totalSpan.innerText = 'P0';
+      if (totalSpan) totalSpan.innerText = '₱0';
       return;
     }
     
@@ -348,12 +348,12 @@
       html += `
         <div class="checkout-item">
           <div><strong>${item.name}</strong> x ${item.quantity}</div>
-          <div>$${itemTotal}</div>
+          <div>₱${itemTotal}</div>
         </div>
       `;
     });
     container.innerHTML = html;
-    if (totalSpan) totalSpan.innerText = `$${total}`;
+    if (totalSpan) totalSpan.innerText = `₱${total}`;
   }
   
   renderCheckoutSummary();
